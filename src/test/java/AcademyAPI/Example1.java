@@ -1,25 +1,28 @@
 package AcademyAPI;
 
 import Payload.PostRequestPayload;
+import RequestSpecification.BaseSetUp;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.response.ResponseBody;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
-public class Example1 {
+public class Example1 extends BaseSetUp {
 
     public String placeId;
+    Response response;
 
-    @Test
+
+    @Test(priority = 0)
     public void creatingPostRequest(){
-        RestAssured.baseURI="https://rahulshettyacademy.com";
 
-        Response response = given().log().all().queryParam("key", "qaclick123")
+        response = given().log().all().queryParam("key", "qaclick123")
                 .header("Content-Type","application/json")
                 .body(PostRequestPayload.createData())
                 .when()
@@ -34,8 +37,19 @@ public class Example1 {
        placeId = response.jsonPath().get("place_id");
     }
 
-    @Test
+    @Test(priority = 1)
     public void updateNewAddress(){
+        response = given().log().all().header("Content-Type","application/json")
+                .queryParam("key","qaclick123")
+                .body("{\"place_id\":\""+placeId+"\",\"address\":\"UpdatedAddress_Saumya,USA\",\"key\":\"qaclick123\"}")
+                .when()
+                .put(" /maps/api/place/update/json")
+                .then()
+                .assertThat()
+                .statusCode(200).log().all().extract().response();
+        String msg = response.jsonPath().get("msg");
+        Assert.assertEquals(msg,"Address successfully updated");
+
 
     }
 
