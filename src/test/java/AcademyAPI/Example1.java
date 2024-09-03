@@ -49,7 +49,19 @@ public class Example1 extends BaseSetUp {
                 .statusCode(200).log().all().extract().response();
         String msg = response.jsonPath().get("msg");
         Assert.assertEquals(msg,"Address successfully updated");
+    }
 
+    @Test(priority = 2)
+    public void getData(){
+        response = given().log().all()
+                .header("Content-Type", "application/json")
+                .queryParam("place_id",placeId)
+                .when()
+                .get("/maps/api/place/get/json")
+                .then()
+                .statusCode(200).log().all()
+                .extract()
+                .response();
 
     }
 
