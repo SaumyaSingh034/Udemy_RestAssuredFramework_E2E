@@ -34,21 +34,12 @@ public class ComplexJsonParse {
             int purchaseAmount = jsRahul.get("dashboard.purchaseAmount");
             for(int i=0;i<size;i++){
                 sum += jsRahul.getInt("courses["+i+"].price");
+                break;
             }
             if(sum==purchaseAmount)
                 System.out.println("Both Amounts are same");
             else
                 System.out.println("Amounts are different");
-
-
-
-
-
-
-
-
-
-
 
 
         JsonPath jsAnuj = new JsonPath(PostRequestPayload.complexJsonAnuj());
@@ -65,6 +56,9 @@ public class ComplexJsonParse {
             }
 
         }
+
+        int expensive = jsAnuj.getInt("expensive");
+        System.out.println(expensive);
 
     }
 }
