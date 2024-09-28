@@ -1,4 +1,4 @@
-package SerializationPOJO;
+package DeserializationPOJO;
 
 public class POJO1 {
 

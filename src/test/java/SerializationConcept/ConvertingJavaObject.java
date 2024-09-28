@@ -1,6 +1,6 @@
 package SerializationConcept;
 
-import SerializationPOJO.POJO1;
+import DeserializationPOJO.POJO1;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
