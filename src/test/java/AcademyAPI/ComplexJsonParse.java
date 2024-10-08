@@ -1,6 +1,10 @@
 package AcademyAPI;
 
+import DeserializationPOJO.Root;
+import DeserializationPOJO.StorePojo;
 import Payload.PostRequestPayload;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.path.json.JsonPath;
 import org.testng.annotations.Test;
 
@@ -66,6 +70,17 @@ public class ComplexJsonParse {
 
     @Test
     public void usingPOJOClass(){
+        String response = PostRequestPayload.complexJsonAnuj();
+     /*   StorePojo sp = response.as(StorePojo.class);
+*/
 
+        ObjectMapper obj = new ObjectMapper();
+        try {
+            Root root = obj.readValue(response, Root.class);
+            System.out.println(root.getExpensive()+" Expensive");
+            System.out.println(root.getStore().getBicycle().getColor()+" -----> "+root.getStore().getBicycle().getPrice());
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
